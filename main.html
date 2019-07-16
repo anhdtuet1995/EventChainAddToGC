@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EventChain Searching</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+	<button id="queryBtn" type="button" class="btn btn-success">Query all events from EventChain</button>
+
+	<table class="table">
+		<thead>
+		  <tr>
+			<th scope="col">#</th>
+			<th scope="col">Event name</th>
+			<th scope="col">Organizer</th>
+			<th scope="col">Date From</th>
+			<th scope="col">Full Address</th>
+			<th scope="col">Add to GC</th>
+		  </tr>
+		</thead>
+		<tbody id="event-body">
+		</tbody>
+	  </table>
+</body>
+
+<script type="text/javascript" src="public/add2ggcalendar.js"></script>
+<script type="text/javascript" src="public/eventinfo.js"></script>
+<script type="text/javascript" src="public/main.js"></script>
+<script type="text/javascript">
+	
+	$("#queryBtn").click(function(){
+		
+		searchOnEventChain("", null, null, "", 
+			function(evcSuccessResult){
+				document.getElementById("event-body").innerHTML = "";
+				console.log(evcSuccessResult);
+				for (i = 0; i < evcSuccessResult.length; i++) {
+					var elem = evcSuccessResult[i].createEventInfoElement(i);
+					document.getElementById("event-body").appendChild(elem);
+				}
+			},
+			function(evcError){
+				console.log(evcError);
+			}
+		);
+
+	});
+	
+	function addButtonCallBack(eventId) {
+		console.log(eventId);
+		queryOneEvent(eventId, function(evcSuccessResult) {
+			console.log(evcSuccessResult);
+			generateCalendars(evcSuccessResult);
+		}, function(evcError) {
+			console.log(evcError);
+		});
+	}
+</script>
+
+	
+</html>
