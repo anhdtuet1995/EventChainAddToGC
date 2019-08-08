@@ -122,7 +122,8 @@ function queryOneEvent(eventId, eventchainSuccess, eventchainFailed) {
 			"title": eventResponse.EventInfo.Title,
 			"start": new Date(startDate.substring(0, startDate.length - 6)),
 			"end": new Date(endDate.substring(0, endDate.length - 6)),
-			"ctz": tzMap[timeZone]
+			"ctz": tzMap[timeZone],
+			"description": "Click here for more details: https://eventchain.io/event-details/" + eventId
 		};
 		eventchainSuccess(eventInfo);
 	}).fail(function (error) {

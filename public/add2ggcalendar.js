@@ -15,8 +15,8 @@ function generateCalendars(event) {
         '?text=' + (event.title || ''),
         '&dates=' + (startTime || ''),
         '/' + (endTime || ''),
-        '&ctz=' + event.ctz
-        // '&details=' + (event.description || ''),
+        '&ctz=' + event.ctz,
+        '&details=' + (event.description || ''),
         // '&location=' + (event.address || ''),
     ].join(''));
     openInNewTab(href);
