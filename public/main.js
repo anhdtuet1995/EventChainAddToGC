@@ -12,7 +12,7 @@ var tzMap = {
     "-02:30": "America/St_Johns",
     "-02:00": "America/Noronha",
     "-01:00": "Atlantic/Cape_Verde",
-    "+00:00": "Atlantic/Azores",
+    "+00:00": "Europe/London",
     "+01:00": "Africa/Algiers",
     "+02:00": "Africa/Khartoum",
     "+03:00": "Asia/Baghdad",
@@ -112,16 +112,17 @@ function queryOneEvent(eventId, eventchainSuccess, eventchainFailed) {
 	}
 	  
 	$.ajax(settings).done(function (response) {
+		console.log("Query one:");
 		console.log(response);
 		var eventResponse = response.data.getEventDetails.event;
 		var startDate = eventResponse.EventInfo.StartDate;
 		var endDate = eventResponse.EventInfo.EndDate;
-		var timeZone = startDate.substring(startDate.length - 6, startDate.length);
+		var timeZone = eventResponse.EventInfo.TimeZone.FullName.substring(4, 10);
 		console.log(timeZone);
 		var eventInfo = {
 			"title": eventResponse.EventInfo.Title,
-			"start": new Date(startDate.substring(0, startDate.length - 6)),
-			"end": new Date(endDate.substring(0, endDate.length - 6)),
+			"start": new Date(startDate),
+			"end": new Date(endDate),
 			"ctz": tzMap[timeZone],
 			"description": "Click here for more details: https://eventchain.io/event-details/" + eventId
 		};
